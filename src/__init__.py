@@ -57,10 +57,13 @@ class _MyAPI(BundleAPI):
             desc = measure_commands.measure_ridges_desc
         elif ci.name == "find voids":
             func = measure_commands.voids_seires
-            desc = measure_commands.voidsize_desc_desc
+            desc = measure_commands.find_voids_desc
         elif ci.name == "void size":
             func = measure_commands.void_size_series
             desc = measure_commands.void_size_desc
+        elif ci.name == "void motion":
+            func = measure_commands.Void_Motion_series
+            desc = measure_commands.Void_Motion_desc
         else:
             raise ValueError(
                 f'Trying to register unknown command: {ci.name}')

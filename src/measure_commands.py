@@ -97,6 +97,11 @@ def void_size_series(session, surface, track, tp, output):
     author yml 20240327"""
     void_size(session, surface, track, tp, output)
 
+def Void_Motion_series(session,track,t,output):
+    """Length of track
+    author yml 20240327"""
+    Void_Motion(session,track,t,output)
+
 def recolor_surfaces(session, surface, metric='intensity', palette=None, color_range=None, key=False):
     """Wraps recolor_surface in a list comprehension"""
     keys = full(len(surface), False)
@@ -788,7 +793,19 @@ def void_size(session, surface, track, tp, output):
         savetxt(f, column_stack([volume,tp]),
             header=f"volume time_point", comments='')
     
-
+def Void_Motion(session,track,t,output):
+    l=numpy.zeros(numpy.shape(track.coords))[:,0]
+    
+    for n in range((numpy.shape(track.coords)[0])-1):
+        l[n]=sqrt(sum((track.coords[n+1]-track.coords[n])**2))
+    
+    motion=sum(l)
+    
+    cd(session, str(output))
+    with open('TrackMotion.csv', 'ab') as f:
+        savetxt(f, column_stack([t,motion]),
+            header=f"Track Motion", comments='')
+    
 
 
 def measure_composite(surface, green_map, magenta_map, radius):
@@ -1109,4 +1126,11 @@ void_size_desc = CmdDesc(
              ('tp',IntArg), 
              ('output',StringArg)],
     required_arguments = ['surface','track','tp','output'],
+    synopsis='output volume')
+
+Void_Motion_desc = CmdDesc(
+    required=[('track', AtomsArg)],
+    keyword=[('t',IntArg),
+             ('output',StringArg)],
+    required_arguments = ['track','t','output'],
     synopsis='output volume')

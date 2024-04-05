@@ -46,6 +46,7 @@ will be displayed without the ChimeraX- prefix.
     <ChimeraXClassifier>ChimeraX :: Command :: measure ridges :: Volume Data :: Color lamella edges by local distacne between frames</ChimeraXClassifier>
     <ChimeraXClassifier>ChimeraX :: Command :: find voids :: Volume Data :: Generate new volumes for voids found in objects</ChimeraXClassifier>
     <ChimeraXClassifier>ChimeraX :: Command :: void size :: Volume Data :: output void volumes</ChimeraXClassifier>
+    <ChimeraXClassifier>ChimeraX :: Command :: void motion :: Volume Data :: output void motion</ChimeraXClassifier>
     <ChimeraXClassifier>ChimeraX :: Command :: surface recolor :: Volume Data :: Recolor surface based on previous measurement</ChimeraXClassifier>
     <ChimeraXClassifier>ChimeraX :: Command :: surface composite :: Volume Data :: Recolor surface as composite based on previous measurements</ChimeraXClassifier>
   </Classifiers>
