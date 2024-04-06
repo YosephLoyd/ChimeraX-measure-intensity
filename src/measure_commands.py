@@ -799,12 +799,13 @@ def Void_Motion(session,track,t,output):
     for n in range((numpy.shape(track.coords)[0])-1):
         l[n]=sqrt(sum((track.coords[n+1]-track.coords[n])**2))
     
-    motion=sum(l)
+    distance=sum(l)
+    RMS= distance/sqrt(shape((track.coords)[0]))
     
     cd(session, str(output))
     with open('TrackMotion.csv', 'ab') as f:
-        savetxt(f, column_stack([t,motion]),
-            header=f"Track Motion", comments='')
+        savetxt(f, column_stack([t,distance,RMS]),
+            header=f"Track Distance Velocity/Frame", comments='')
     
 
 
