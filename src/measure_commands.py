@@ -139,7 +139,7 @@ def measure_topology(session, surface, to_cell, radius=8, target='sRBC', size=[0
         return
     #Target not recognized
 
-    """Define the target centroid from mid range x,y and z coordinates."""
+    """Define the target centroid from mid-range x, y and z coordinates."""
     centroid = mean(to_cell.vertices, axis=0)
 
     """Vertice x,y and z distances from centroid"""
@@ -148,7 +148,7 @@ def measure_topology(session, surface, to_cell, radius=8, target='sRBC', size=[0
     x_coord = x_coord.flatten()
     y_coord = y_coord.flatten()
     z_coord = z_coord.flatten()
-    """Converting the cartisian system into spherical coordinates"""
+    """Converting the cartesian system into spherical coordinates"""
     z_squared = z_coord ** 2
     y_squared = y_coord ** 2
     x_squared = x_coord ** 2
@@ -164,7 +164,7 @@ def measure_topology(session, surface, to_cell, radius=8, target='sRBC', size=[0
     radialClose = outerlim & (distance > target_r)
 
 
-    """Logic statments for solving the unique X,Y coordinates in the upper hemisphere search"""
+    """Logic statements for solving the unique X,Y coordinates in the upper hemisphere search"""
     XYZ_SearchLim = distance*abovePhi
     SearchR = (distance*abovePhi*radialClose)>0
     '''XY_SearchR = distance*abovePhi
@@ -211,7 +211,7 @@ def measure_topology(session, surface, to_cell, radius=8, target='sRBC', size=[0
 
     ArtImg_Filledxyz = binary_erosion(((gaussian_filter(ArtImgxyz,.2))>0),border_value=1,iterations=1)'''
     ArtImg = ImgReconstruct(SearchR,x_coord,y_coord,z_coord,XYZ_SearchLim,radius=radius, size=size)
-    """Area of pixels in X,Y plane of the hemispher search"""
+    """Area of pixels in X,Y plane of the hemisphere search"""
     Area_S= count_nonzero(ArtImg) * (size[1] * size[0])
 
     """Outputs for coloring vertices as surface. arguments"""
@@ -261,7 +261,7 @@ def measure_ridges(session, surface, to_surface, to_cell,  radius = 8, smoothing
     y_coord = y_coord.flatten()
     z_coord = z_coord.flatten()
 
-    """Converting the cartisian coordinates into spherical coordinates for surface t"""
+    """Converting the cartesian coordinates into spherical coordinates for surface t"""
     z_squared = z_coord ** 2
     y_squared = y_coord ** 2
     x_squared = x_coord ** 2
@@ -306,7 +306,7 @@ def measure_ridges(session, surface, to_surface, to_cell,  radius = 8, smoothing
     ArtImg_edges = ImgReconstruct(surface.edges, x_coord, y_coord, z_coord, SearchLim=surface.edges, radius=radius, size=size)
     ArtImg_whole = ImgReconstruct(1 ,x_coord, y_coord, z_coord, SearchLim= SearchLimit, radius=radius, size=size)
     
-    """Equvilant to surface dusting all membranes disconnected from the largest object"""
+    """Equivalent to surface dusting all membranes disconnected from the largest object"""
     ArtCC = label(ArtImg_whole)
     cc_num, countscc= unique(ArtCC,return_counts=True)
     fcc = countscc
@@ -373,7 +373,7 @@ def measure_ridges(session, surface, to_surface, to_cell,  radius = 8, smoothing
         x_coord_t = x_coord_t.flatten()
         y_coord_t = y_coord_t.flatten()
         z_coord_t = z_coord_t.flatten()
-        """Converting the cartisian coordinates into spherical coordinates for surface t+1"""
+        """Converting the cartesian coordinates into spherical coordinates for surface t+1"""
         z_squared_t = z_coord_t ** 2
         y_squared_t = y_coord_t ** 2
         x_squared_t = x_coord_t ** 2
@@ -400,7 +400,7 @@ def measure_ridges(session, surface, to_surface, to_cell,  radius = 8, smoothing
 def ImgReconstruct(Points, x_coord, y_coord, z_coord, SearchLim, radius, size):
     """This script will reconstruct an image form the location of vertices in your rendered surface"""
 
-    """Logic statments for specific objects we care about"""
+    """Logic statements for specific objects we care about"""
     XYZ_SearchR = SearchLim
     XYZ_deletes = where(XYZ_SearchR==0)
 
@@ -426,7 +426,7 @@ def ImgReconstruct(Points, x_coord, y_coord, z_coord, SearchLim, radius, size):
     ybins = digitize(xyz[:,1],linspace(-1*(radius),radius,steps))
     zbins = digitize(xyz[:,2],linspace(-1*(radius),radius,steps))
 
-    """Making an artificial binary mask of binned vertices into 'pixels' from vertice location"""
+    """Making an artificial binary mask of binned vertices into 'pixels' from location of vertices"""
     
     ArtImgxyz= zeros([steps,steps,steps])
     ArtImgxyz[xbins,ybins,zbins]= 1
@@ -445,7 +445,7 @@ def measure_intensity(session, surface, to_map, radius, xnorm, ynorm, znorm, blo
     surface.intensity = face_intensity
 
     """
-    Amended section is disgned to report and create palletes for 
+    Amended section is designed to report and create palettes for 
     hemispheres on target of intensity values
     Author: YML
     Date: 20230907
