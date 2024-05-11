@@ -330,6 +330,7 @@ def measure_ridges(session, surface, to_surface, to_cell,  radius = 8, smoothing
     """size exclusion"""
     size_exclusion= exclusion / size[0]
     p=where(f >= size_exclusion)
+    histinfo=f[p]
 
     surface.pathlengthsabovethresh= count_nonzero(isin(RidgeCc,p)==True)*size[0]
 
@@ -341,8 +342,11 @@ def measure_ridges(session, surface, to_surface, to_cell,  radius = 8, smoothing
     if path == True:
         cd(session,str(output))
         with open('RidgeInfo.csv', 'ab') as f:
-            savetxt(f, column_stack([surface.Area, surface.pathlength, surface.pathlengthsabovethresh]),
+            savetxt(f, column_stack([surface.Area, surface.pathlength, surface.pathlengthsabovethresh, p]),
                      header=f"High_Curve_Surface_Area Lamella_pathlength Lamella_pathlength_above_thresh", comments='')
+        with open('RidgehistInfo.csv', 'ab') as f:
+            savetxt(f, [histinfo],
+                    header=f"hist_of_ridge_sizes", comments='')
         pos=where(isin(RidgeCc,p)==True)
         frame=str(surface.id[1])
         fig= plt.figure()
@@ -350,14 +354,14 @@ def measure_ridges(session, surface, to_surface, to_cell,  radius = 8, smoothing
         ax.scatter(pos[0], pos[1], pos[2], c='black')
         ax.set_title('Skeletonized Edges')
         ax.set_xlabel('X \u03BCm $10^{-1}$')
-        ax.set_xlim(0,max(pos[0]))
-        ax.set_xticks([0,max(pos[0])])
+        ax.set_xlim(0,pos[0])
+        ax.set_xticks([0,pos[0]])
         ax.set_ylabel('Y \u03BCm $10^{-1}$')
-        ax.set_ylim(0,max(pos[1]))
-        ax.set_yticks([0,max(pos[1])])
+        ax.set_ylim(0,pos[1])
+        ax.set_yticks([0,pos[1]])
         ax.set_zlabel('Z \u03BCm $10^{-1}$')
-        ax.set_zlim(0,max(pos[2]))
-        ax.set_zticks([0,max(pos[2])])
+        ax.set_zlim(0,pos[2])
+        ax.set_zticks([0,pos[2]])
         """Ruffling graph"""
         """ax.view_init(400,225,roll=None)"""
         """Phagocytosis graph"""
